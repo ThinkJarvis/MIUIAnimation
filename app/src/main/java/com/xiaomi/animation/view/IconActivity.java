@@ -3,7 +3,7 @@ package com.xiaomi.animation.view;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.xiaomi.animation.Info.IconInfo;
+import com.xiaomi.animation.info.IconInfo;
 import com.xiaomi.animation.R;
 import com.xiaomi.animation.Util;
 

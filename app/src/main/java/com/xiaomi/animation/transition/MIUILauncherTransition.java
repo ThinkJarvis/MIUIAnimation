@@ -5,18 +5,15 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.transition.Transition;
 import android.transition.TransitionValues;
 import android.util.Log;
-import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationSet;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 
-import com.xiaomi.animation.Info.IconInfo;
+import com.xiaomi.animation.info.IconInfo;
 import com.xiaomi.animation.PropertyAnimator.AnimationUtils;
 
 /**

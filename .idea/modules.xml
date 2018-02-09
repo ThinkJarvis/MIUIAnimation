@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Animation.iml" filepath="$PROJECT_DIR$/Animation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MIUIAnimation.iml" filepath="$PROJECT_DIR$/MIUIAnimation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

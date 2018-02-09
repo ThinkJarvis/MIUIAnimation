@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.xiaomi.animation.Info.IconInfo;
+import com.xiaomi.animation.info.IconInfo;
 import com.xiaomi.animation.R;
 import com.xiaomi.animation.Util;
 

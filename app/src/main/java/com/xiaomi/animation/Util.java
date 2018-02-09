@@ -10,7 +10,7 @@ import android.util.Log;
 import android.util.Pair;
 import android.widget.TextView;
 
-import com.xiaomi.animation.Info.IconInfo;
+import com.xiaomi.animation.info.IconInfo;
 
 import java.util.ArrayList;
 import java.util.List;

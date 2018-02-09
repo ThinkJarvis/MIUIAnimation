@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.GridView;
 
-import com.xiaomi.animation.Info.IconInfo;
+import com.xiaomi.animation.info.IconInfo;
 import com.xiaomi.animation.PropertyAnimator.ViewPropertyAnimator;
 import com.xiaomi.animation.view.BubbleTextView;
 
