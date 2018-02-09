@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private MIUILauncherTransition mMIUILauncherTransition;
     private boolean isTransition = false;
     private IconInfo mIconInfo;
+    private View mSelectedView;
     private Context mContext;
     private TextView mTextView;
 
@@ -62,12 +63,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         IconInfo iconInfo = (IconInfo) view.getTag();
+        mSelectedView = view;
         mIconInfo = iconInfo;
         iconInfo.setRectF(Util.getDrawTopRect((BubbleTextView) view));
         if (isTransition)
             startActivity(iconInfo);
         else
-            startView(iconInfo);
+            startView(mSelectedView);
     }
 
     @Override
@@ -78,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onBackPressed() {
         if (mPopView != null) {
-            AnimatorSet animatorSet = startViewExitAnimation(mIconInfo);
+            AnimatorSet animatorSet = startViewExitAnimation(mSelectedView);
             animatorSet.addListener(new Animator.AnimatorListener() {
                 @Override
                 public void onAnimationStart(Animator animation) {
@@ -114,13 +116,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         startActivityForResult(intent,1,ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 
-    private void startView(IconInfo iconInfo) {
+    private void startView(View selectedView) {
         mPopView = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.activity_icon,null,false);
         mRootView.addView(mPopView);
-        startViewEnterAnimation(iconInfo);
+        startViewEnterAnimation(selectedView);
     }
 
-    private void startViewEnterAnimation(IconInfo iconInfo) {
+    private void startViewEnterAnimation(final View selectedView) {
+        IconInfo iconInfo = (IconInfo) selectedView.getTag();
         float scaleX = (float) iconInfo.getWidth() / (float) mGirdView.getWidth();
         float scaleY = (float) iconInfo.getHeight() / (float) mGirdView.getHeight();
         float startX = iconInfo.getRectF().centerX() - iconInfo.getWidth() / 2;
@@ -128,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         AnimatorSet animatorSet = AnimationUtils.createAnimatorSet();
         mPopView.setPivotX(0);
         mPopView.setPivotY(0);
-        ObjectAnimator alphaAnim = AnimationUtils.ofFloat(mPopView, "alpha", 0f, 1f);
+        ObjectAnimator alphaAnim = AnimationUtils.ofFloat(mPopView, "alpha", 1f, 1f);
         ObjectAnimator xAnim = AnimationUtils.ofFloat(mPopView, "x",startX, 0f);
         ObjectAnimator yAnim = AnimationUtils.ofFloat(mPopView, "y",startY, 0f);
         ObjectAnimator scaleXAnim = AnimationUtils.ofFloat(mPopView, "scaleX", scaleX, 1f);
@@ -139,16 +142,37 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         ObjectAnimator alphaGridViewAnim = AnimationUtils.ofFloat(mGirdView, "alpha", 1f, 0f);
         ObjectAnimator scaleGridViewXAnim = AnimationUtils.ofFloat(mGirdView, "scaleX", 1f, 2f);
         ObjectAnimator scaleGridViewYAnim = AnimationUtils.ofFloat(mGirdView, "scaleY",1f, 2f);
-
         animatorSet.setDuration(800);
         animatorSet.setInterpolator(sDecelerateInterpolator);
+        animatorSet.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                selectedView.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                selectedView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
         animatorSet.playTogether(alphaAnim, xAnim, yAnim, scaleXAnim, scaleYAnim,
                 alphaGridViewAnim, scaleGridViewXAnim, scaleGridViewYAnim);
         animatorSet.start();
     }
 
-    private AnimatorSet startViewExitAnimation(final IconInfo iconInfo) {
+    private AnimatorSet startViewExitAnimation(final View selectedView) {
         mTextView = createThumbnailView();
+        IconInfo iconInfo = (IconInfo) selectedView.getTag();
         float scaleX = (float) iconInfo.getWidth() / (float) mGirdView.getWidth();
         float scaleY = (float) iconInfo.getHeight() / (float) mGirdView.getHeight();
         float endX = iconInfo.getRectF().centerX() - iconInfo.getWidth() / 2;
@@ -164,11 +188,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         scaleXAnim.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
-
+                selectedView.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onAnimationEnd(Animator animation) {
+                selectedView.setVisibility(View.VISIBLE);
                 if (mTextView != null) {
                     mRootView.removeView(mTextView);
                     mTextView = null;
