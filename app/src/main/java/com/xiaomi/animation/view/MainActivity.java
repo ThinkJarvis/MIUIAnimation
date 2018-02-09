@@ -8,14 +8,9 @@ import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.transition.Slide;
-import android.transition.Transition;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,16 +19,14 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.xiaomi.animation.Info.IconInfo;
+import com.xiaomi.animation.info.IconInfo;
 import com.xiaomi.animation.PropertyAnimator.AnimationUtils;
 import com.xiaomi.animation.R;
 import com.xiaomi.animation.Util;
 import com.xiaomi.animation.transition.MIUILauncherTransition;
-import com.xiaomi.animation.transition.test;
 
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
@@ -245,9 +238,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private int getStatusBarHeight(Context context) {
-        /**
-         * 获取状态栏高度——方法2
-         * */
         int statusBarHeight = -1;
         try {
             Class<?> clazz = Class.forName("com.android.internal.R$dimen");
