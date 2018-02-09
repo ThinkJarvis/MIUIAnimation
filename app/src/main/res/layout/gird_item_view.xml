@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.xiaomi.animation.view.BubbleTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/icon"
+    android:layout_width="56dp"
+    android:layout_height="56dp"
+    android:padding="8dp"
+    android:gravity="center"/>
+
