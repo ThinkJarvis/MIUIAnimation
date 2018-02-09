@@ -1,4 +1,4 @@
-package com.xiaomi.animation.Info;
+package com.xiaomi.animation.info;
 
 import android.graphics.RectF;
 import android.os.Parcel;
