@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
@@ -31,6 +32,7 @@ import com.xiaomi.animation.transition.MIUILauncherTransition;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
     private static final DecelerateInterpolator sDecelerateInterpolator = new DecelerateInterpolator();
+    private static final AccelerateInterpolator sAccelerateInterpolator = new AccelerateInterpolator();
     private FrameLayout mRootView;
     private GridView mGirdView;
     private RelativeLayout mPopView;
@@ -142,8 +144,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         ObjectAnimator alphaGridViewAnim = AnimationUtils.ofFloat(mGirdView, "alpha", 1f, 0f);
         ObjectAnimator scaleGridViewXAnim = AnimationUtils.ofFloat(mGirdView, "scaleX", 1f, 2f);
         ObjectAnimator scaleGridViewYAnim = AnimationUtils.ofFloat(mGirdView, "scaleY",1f, 2f);
-        animatorSet.setDuration(800);
-        animatorSet.setInterpolator(sDecelerateInterpolator);
+        animatorSet.setDuration(400);
+        animatorSet.setInterpolator(sAccelerateInterpolator);
         animatorSet.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
@@ -244,7 +246,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         ObjectAnimator scaleGridViewYAnim = AnimationUtils.ofFloat(mGirdView, "scaleY",2f, 1f);
 
 
-        animatorSet.setDuration(800);
+        animatorSet.setDuration(400);
         animatorSet.setInterpolator(sDecelerateInterpolator);
         animatorSet.playTogether(alphaAnim, xAnim, yAnim, scaleXAnim, scaleYAnim,
                 alphaGridViewAnim, scaleGridViewXAnim, scaleGridViewYAnim);
