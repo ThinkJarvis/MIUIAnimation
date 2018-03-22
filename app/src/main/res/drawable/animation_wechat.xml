@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@mipmap/gome_icon_wechat_24" android:duration="33"></item>
+    <item android:drawable="@mipmap/gome_icon_wechat_00" android:duration="33"></item>
+    <item android:drawable="@mipmap/gome_icon_wechat_01" android:duration="33"></item>
+    <item android:drawable="@mipmap/gome_icon_wechat_02" android:duration="33"></item>
+    <item android:drawable="@mipmap/gome_icon_wechat_03" android:duration="33"></item>
+    <item android:drawable="@mipmap/gome_icon_wechat_04" android:duration="33"></item>
+    <item android:drawable="@mipmap/gome_icon_wechat_05" android:duration="33"></item>
+    <item android:drawable="@mipmap/gome_icon_wechat_06" android:duration="33"></item>
+    <item android:drawable="@mipmap/gome_icon_wechat_07" android:duration="33"></item>
+    <item android:drawable="@mipmap/gome_icon_wechat_08" android:duration="33"></item>
+    <item android:drawable="@mipmap/gome_icon_wechat_09" android:duration="33"></item>
+
+    <item android:drawable="@mipmap/gome_icon_wechat_10" android:duration="33"></item>
+    <item android:drawable="@mipmap/gome_icon_wechat_11" android:duration="33"></item>
+    <item android:drawable="@mipmap/gome_icon_wechat_12" android:duration="33"></item>
+    <item android:drawable="@mipmap/gome_icon_wechat_13" android:duration="33"></item>
+    <item android:drawable="@mipmap/gome_icon_wechat_14" android:duration="33"></item>
+    <item android:drawable="@mipmap/gome_icon_wechat_15" android:duration="33"></item>
+    <item android:drawable="@mipmap/gome_icon_wechat_16" android:duration="33"></item>
+    <item android:drawable="@mipmap/gome_icon_wechat_17" android:duration="33"></item>
+    <item android:drawable="@mipmap/gome_icon_wechat_18" android:duration="33"></item>
+    <item android:drawable="@mipmap/gome_icon_wechat_19" android:duration="33"></item>
+
+    <item android:drawable="@mipmap/gome_icon_wechat_20" android:duration="33"></item>
+    <item android:drawable="@mipmap/gome_icon_wechat_21" android:duration="33"></item>
+    <item android:drawable="@mipmap/gome_icon_wechat_22" android:duration="33"></item>
+    <item android:drawable="@mipmap/gome_icon_wechat_23" android:duration="33"></item>
+    <item android:drawable="@mipmap/gome_icon_wechat_24" android:duration="33"></item>
+
+</animation-list>

@@ -5,9 +5,15 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.TextView;
+
+import com.xiaomi.animation.R;
+import com.xiaomi.animation.script.ClockScript;
+import com.xiaomi.animation.script.FrameScript;
 
 import static com.xiaomi.animation.Util.DEBUG;
 
@@ -16,6 +22,9 @@ import static com.xiaomi.animation.Util.DEBUG;
  */
 
 public class BubbleTextView extends TextView {
+
+    private int mIconSize;
+
     public BubbleTextView(Context context) {
         this(context, null);
     }
@@ -26,7 +35,59 @@ public class BubbleTextView extends TextView {
 
     public BubbleTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        mIconSize = (int) context.getResources().getDimension(R.dimen.app_icon_size);
     }
+
+    public void setIcon(Drawable icon) {
+        icon.setBounds(0,0,mIconSize, mIconSize);
+        setCompoundDrawables(null, icon, null, null);
+    }
+
+    public int getIconSize() {
+        return mIconSize;
+    }
+
+    @Override
+    public void setCompoundDrawables(@Nullable Drawable left, @Nullable Drawable top, @Nullable Drawable right, @Nullable Drawable bottom) {
+        if (top != null && top instanceof ClockScript) {
+            ClockScript clockScript = (ClockScript) top;
+            if (!clockScript.isRunning) {
+                clockScript.run(this);
+            }
+        }
+        super.setCompoundDrawables(left, top, right, bottom);
+    }
+
+    public void startFrameAnimation() {
+        Drawable top = getDrawableTop();
+        if (top != null && top instanceof FrameScript) {
+            FrameScript frameScript = (FrameScript)top;
+            if (!frameScript.isRunning) {
+                frameScript.run(this);
+            }
+        }
+    }
+
+    public void stopFrameAnimation() {
+        Drawable top = getDrawableTop();
+        if (top != null && top instanceof FrameScript) {
+            FrameScript frameScript = (FrameScript)top;
+            if (frameScript.isRunning) {
+                frameScript.onStop();
+            }
+        }
+    }
+
+    private Drawable getDrawableTop() {
+        Drawable top = null;
+        Drawable[] drawables = getCompoundDrawables();
+        if (drawables.length < 2){
+            return top;
+        }
+        top = getCompoundDrawables()[1];
+        return top;
+    }
+
 
 
     @Override

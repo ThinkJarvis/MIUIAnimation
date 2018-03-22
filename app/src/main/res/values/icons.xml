@@ -7,7 +7,7 @@
         <item>gome_icon_launcher_calculator-计算器</item>
         <item>gome_icon_launcher_calendar-日历</item>
         <item>gome_icon_launcher_camera-照相机</item>
-        <item>gome_icon_launcher_clock-时针</item>
+        <item>gome_icon_launcher_clock-时钟</item>
         <item>gome_icon_launcher_compass-指南针</item>
         <item>gome_icon_launcher_contacts-通讯录</item>
         <item>gome_icon_launcher_data_transfer-翻译</item>
@@ -27,6 +27,7 @@
         <item>gome_icon_launcher_sim_toolkit-SIM卡</item>
         <item>gome_icon_launcher_usercenter-用户中心</item>
         <item>gome_icon_launcher_weather-天气</item>
-        <item>gome_icon_launcher_wechat_files-微信</item>
+        <item>gome_icon_launcher_wechat_files-微信文件</item>
+        <item>gome_icon_wechat_24-微信</item>
     </string-array>
 </resources>

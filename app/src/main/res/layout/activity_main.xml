@@ -8,13 +8,12 @@
     android:background="@drawable/background"
     tools:context="com.xiaomi.animation.view.MainActivity">
 
-
     <GridView
         android:id="@+id/grid_view"
+        android:listSelector="@android:color/transparent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:numColumns="4"
         android:paddingTop="10dp" />
-
 
 </FrameLayout>

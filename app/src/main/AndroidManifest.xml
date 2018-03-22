@@ -3,6 +3,7 @@
     package="com.xiaomi.animation">
 
     <application
+        android:name=".LaunchApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -16,8 +17,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.IconActivity" />
-        <activity android:name=".view.SubActivity" />
     </application>
 
 </manifest>

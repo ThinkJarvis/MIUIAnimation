@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
-import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -12,9 +11,9 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
@@ -27,8 +26,6 @@ import com.xiaomi.animation.info.IconInfo;
 import com.xiaomi.animation.PropertyAnimator.AnimationUtils;
 import com.xiaomi.animation.R;
 import com.xiaomi.animation.Util;
-import com.xiaomi.animation.transition.MIUILauncherTransition;
-
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
     private static final DecelerateInterpolator sDecelerateInterpolator = new DecelerateInterpolator();
@@ -36,18 +33,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private FrameLayout mRootView;
     private GridView mGirdView;
     private RelativeLayout mPopView;
-    private MIUILauncherTransition mMIUILauncherTransition;
-    private boolean isTransition = false;
     private IconInfo mIconInfo;
-    private View mSelectedView;
+    private BubbleTextView mSelectedView;
     private Context mContext;
     private TextView mTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-        mMIUILauncherTransition = new MIUILauncherTransition();
-        getWindow().setReenterTransition(mMIUILauncherTransition);
         super.onCreate(savedInstanceState);
         mContext = this;
         initViews();
@@ -65,13 +57,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         IconInfo iconInfo = (IconInfo) view.getTag();
-        mSelectedView = view;
+        mSelectedView = (BubbleTextView) view;
         mIconInfo = iconInfo;
         iconInfo.setRectF(Util.getDrawTopRect((BubbleTextView) view));
-        if (isTransition)
-            startActivity(iconInfo);
-        else
-            startView(mSelectedView);
+        startView(mSelectedView);
     }
 
     @Override
@@ -111,20 +100,19 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
-    private void startActivity(IconInfo iconInfo) {
-        Intent intent = new Intent(MainActivity.this, IconActivity.class);
-        intent.putExtra("Icon_Info",iconInfo);
-        mMIUILauncherTransition.setIntent(intent);
-        startActivityForResult(intent,1,ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
-    }
-
-    private void startView(View selectedView) {
+    private void startView(BubbleTextView selectedView) {
         mPopView = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.activity_icon,null,false);
+        mPopView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
         mRootView.addView(mPopView);
         startViewEnterAnimation(selectedView);
     }
 
-    private void startViewEnterAnimation(final View selectedView) {
+    private void startViewEnterAnimation(final BubbleTextView selectedView) {
         IconInfo iconInfo = (IconInfo) selectedView.getTag();
         float scaleX = (float) iconInfo.getWidth() / (float) mGirdView.getWidth();
         float scaleY = (float) iconInfo.getHeight() / (float) mGirdView.getHeight();
@@ -172,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         animatorSet.start();
     }
 
-    private AnimatorSet startViewExitAnimation(final View selectedView) {
+    private AnimatorSet startViewExitAnimation(final BubbleTextView selectedView) {
         mTextView = createThumbnailView();
         IconInfo iconInfo = (IconInfo) selectedView.getTag();
         float scaleX = (float) iconInfo.getWidth() / (float) mGirdView.getWidth();
@@ -199,6 +187,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 if (mTextView != null) {
                     mRootView.removeView(mTextView);
                     mTextView = null;
+                }
+
+                if (selectedView.getText().equals("微信")) {
+                    selectedView.stopFrameAnimation();
+                    selectedView.startFrameAnimation();
                 }
             }
 

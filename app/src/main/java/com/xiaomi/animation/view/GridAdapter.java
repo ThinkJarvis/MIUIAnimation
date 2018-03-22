@@ -8,9 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.xiaomi.animation.LaunchApplication;
 import com.xiaomi.animation.info.IconInfo;
 import com.xiaomi.animation.R;
 import com.xiaomi.animation.Util;
+import com.xiaomi.animation.script.ClockScript;
+import com.xiaomi.animation.script.FrameScript;
 
 import java.util.List;
 import static com.xiaomi.animation.Util.DEBUG;
@@ -52,9 +55,15 @@ public class GridAdapter extends BaseAdapter {
         IconInfo iconInfo = mIcons.get(position);
         BubbleTextView icon = (BubbleTextView) convertView;
         Drawable drawableTop = Util.getDrawableTopByID(mContext,iconInfo.getDrawableId());
-        icon.setCompoundDrawables(null, drawableTop,null,null);
-        iconInfo.setWidth(drawableTop.getBounds().width());
-        iconInfo.setHeight(drawableTop.getBounds().height());
+        if (iconInfo.getText().equals("时钟")) {
+            icon.setIcon(new ClockScript());
+        }else if (iconInfo.getText().equals("微信")) {
+            icon.setIcon(new FrameScript(LaunchApplication.getAppContext(),R.drawable.animation_wechat));
+        }else {
+            icon.setIcon(drawableTop);
+        }
+        iconInfo.setWidth(icon.getIconSize());
+        iconInfo.setHeight(icon.getIconSize());
         icon.setText(iconInfo.getText());
         icon.setTag(iconInfo);
         if (DEBUG) {
