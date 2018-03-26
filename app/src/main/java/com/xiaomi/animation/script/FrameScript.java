@@ -16,14 +16,14 @@ public class FrameScript extends IconScript{
 
     private PlayFrameThread mPlayFrameThread = null;
 
-    private static Drawable sStaticFrame;
-    private static Drawable mCurrentFrame;
-    private static String sAnimationDrawableName;
+    private Drawable mStaticFrame;
+    private Drawable mCurrentFrame;
+    private String mAnimationDrawableName;
 
 
     public FrameScript(Drawable staticFrame, String drawableName) {
-        sStaticFrame = staticFrame;
-        sAnimationDrawableName = drawableName;
+        mStaticFrame = staticFrame;
+        mAnimationDrawableName = drawableName;
     }
 
 
@@ -47,7 +47,7 @@ public class FrameScript extends IconScript{
     @Override
     public void onStop() {
         super.onStop();
-        mCurrentFrame = sStaticFrame;
+        mCurrentFrame = mStaticFrame;
         if (mPlayFrameThread != null) {
             mPlayFrameThread.stopRun();
             mPlayFrameThread.interrupt();
@@ -56,7 +56,7 @@ public class FrameScript extends IconScript{
     }
 
     public Drawable getFirstFrame() {
-        String firstFrameName = sAnimationDrawableName + "_00";
+        String firstFrameName = mAnimationDrawableName + "_00";
         return LaunchApplication.getContext().getResources().
                 getDrawable(getDrawableId(firstFrameName,"mipmap"));
     }
@@ -66,7 +66,7 @@ public class FrameScript extends IconScript{
                 getIdentifier(drawableName,defType,LaunchApplication.getContext().getPackageName());
     }
 
-    private static class PlayFrameThread extends Thread {
+    private class PlayFrameThread extends Thread {
         private boolean running = true;
         private View mView;
         private AnimationDrawable mAnimationDrawable;
@@ -75,7 +75,7 @@ public class FrameScript extends IconScript{
             mView = view;
             mAnimationDrawable = (AnimationDrawable) LaunchApplication.getContext().
                     getResources().getDrawable(
-                            getDrawableId(sAnimationDrawableName,"drawable"));
+                            getDrawableId(mAnimationDrawableName,"drawable"));
         }
 
         public void stopRun() {
