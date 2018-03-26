@@ -35,7 +35,7 @@ public class ClockScript extends IconScript {
 
     public ClockScript() {
         super();
-        sContext = LaunchApplication.getAppContext();
+        sContext = LaunchApplication.getContext();
         sDrawableClockPointerHour = getBitmapDrawable(R.mipmap.hour);
         sDrawableClockPointerMinute = getBitmapDrawable(R.mipmap.minute);
         sDrawableClockPointerSecond = getBitmapDrawable(R.mipmap.second);

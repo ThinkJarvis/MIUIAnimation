@@ -8,14 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.xiaomi.animation.LaunchApplication;
-import com.xiaomi.animation.info.IconInfo;
 import com.xiaomi.animation.R;
 import com.xiaomi.animation.Util;
+import com.xiaomi.animation.info.IconInfo;
 import com.xiaomi.animation.script.ClockScript;
 import com.xiaomi.animation.script.FrameScript;
 
 import java.util.List;
+
 import static com.xiaomi.animation.Util.DEBUG;
 /**
  * Created by admin on 2018/1/25.
@@ -58,7 +58,7 @@ public class GridAdapter extends BaseAdapter {
         if (iconInfo.getText().equals("时钟")) {
             icon.setIcon(new ClockScript());
         }else if (iconInfo.getText().equals("微信")) {
-            icon.setIcon(new FrameScript(LaunchApplication.getAppContext(),R.drawable.animation_wechat));
+            icon.setIcon(new FrameScript(drawableTop,"gome_icon_wechat"));
         }else {
             icon.setIcon(drawableTop);
         }

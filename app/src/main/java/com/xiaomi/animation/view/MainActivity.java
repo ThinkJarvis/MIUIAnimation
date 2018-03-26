@@ -8,8 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,10 +22,11 @@ import android.widget.GridView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.xiaomi.animation.info.IconInfo;
 import com.xiaomi.animation.PropertyAnimator.AnimationUtils;
 import com.xiaomi.animation.R;
 import com.xiaomi.animation.Util;
+import com.xiaomi.animation.info.IconInfo;
+import com.xiaomi.animation.script.FrameScript;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
     private static final DecelerateInterpolator sDecelerateInterpolator = new DecelerateInterpolator();
@@ -214,7 +215,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 float b =  1- animation.getDuration() * k;
                 if (animation.getDuration() * 0.65f < (float)animation.getCurrentPlayTime()) {
                     ViewGroup.LayoutParams layoutParams = mTextView.getLayoutParams();
-                    Drawable drawable = mContext.getResources().getDrawable(mIconInfo.getDrawableId());
+                    Drawable drawable = mSelectedView.getCompoundDrawables()[1].getCurrent();
+                    if (mSelectedView.getText().equals("微信")) {
+                        drawable = ((FrameScript)mSelectedView.getCompoundDrawables()[1]).getFirstFrame();
+                    }
                     int thumbnailWidth = (int) (mPopView.getScaleX() * mPopView.getWidth());
                     int thumbnailHeight = (int) (mPopView.getScaleY() * mPopView.getHeight());
                     drawable.setBounds(0,0,thumbnailWidth,thumbnailHeight);

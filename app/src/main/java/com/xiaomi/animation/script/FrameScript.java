@@ -1,11 +1,12 @@
 package com.xiaomi.animation.script;
 
-import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.view.View;
+
+import com.xiaomi.animation.LaunchApplication;
 
 /**
  * Created by admin on 2018/3/22.
@@ -13,13 +14,16 @@ import android.view.View;
 
 public class FrameScript extends IconScript{
 
-    private AnimationDrawable mAnimationDrawable;
     private PlayFrameThread mPlayFrameThread = null;
-    private View mView;
-    private static int index = 0;
 
-    public FrameScript(Context context, int drawableId) {
-        mAnimationDrawable = (AnimationDrawable) context.getResources().getDrawable(drawableId);
+    private static Drawable sStaticFrame;
+    private static Drawable mCurrentFrame;
+    private static String sAnimationDrawableName;
+
+
+    public FrameScript(Drawable staticFrame, String drawableName) {
+        sStaticFrame = staticFrame;
+        sAnimationDrawableName = drawableName;
     }
 
 
@@ -27,18 +31,15 @@ public class FrameScript extends IconScript{
     public void draw(@NonNull Canvas canvas) {
         if (!isRunning) {
             onStop();
-            drawBitmapByIndex(canvas,0);
-        }else {
-            drawBitmapByIndex(canvas,index);
         }
+        canvas.drawBitmap(drawableToBitmap(mCurrentFrame), null, getBounds(), mPaint);
     }
 
     @Override
     public void run(View view) {
         super.run(view);
-        mView = view;
         if (mPlayFrameThread == null) {
-            mPlayFrameThread = new PlayFrameThread(view, mAnimationDrawable);
+            mPlayFrameThread = new PlayFrameThread(view);
             mPlayFrameThread.start();
         }
     }
@@ -46,47 +47,55 @@ public class FrameScript extends IconScript{
     @Override
     public void onStop() {
         super.onStop();
+        mCurrentFrame = sStaticFrame;
         if (mPlayFrameThread != null) {
-            index = 0;
-            mView.postInvalidate();
             mPlayFrameThread.stopRun();
             mPlayFrameThread.interrupt();
             mPlayFrameThread = null;
-            mView = null;
         }
     }
 
-    private void drawBitmapByIndex(Canvas canvas, int index) {
-        Bitmap bitmap = drawableToBitmap(mAnimationDrawable.getFrame(index));
-        canvas.drawBitmap(bitmap, null, getBounds(), mPaint);
+    public Drawable getFirstFrame() {
+        String firstFrameName = sAnimationDrawableName + "_00";
+        return LaunchApplication.getContext().getResources().
+                getDrawable(getDrawableId(firstFrameName,"mipmap"));
     }
 
+    public static int getDrawableId(String drawableName,String defType) {
+        return LaunchApplication.getContext().getResources().
+                getIdentifier(drawableName,defType,LaunchApplication.getContext().getPackageName());
+    }
 
     private static class PlayFrameThread extends Thread {
         private boolean running = true;
         private View mView;
         private AnimationDrawable mAnimationDrawable;
-        public PlayFrameThread(View view, AnimationDrawable animationDrawable) {
+        private int index = 0;
+        public PlayFrameThread(View view) {
             mView = view;
-            mAnimationDrawable = animationDrawable;
+            mAnimationDrawable = (AnimationDrawable) LaunchApplication.getContext().
+                    getResources().getDrawable(
+                            getDrawableId(sAnimationDrawableName,"drawable"));
         }
 
         public void stopRun() {
             index = 0;
+            mAnimationDrawable = null;
             running = false;
             mView = null;
         }
 
         public void run() {
             while (running) {
-                index++;
                 if (index == mAnimationDrawable.getNumberOfFrames()) {
                     stopRun();
                     return;
                 }
                 if (mView != null) {
+                    mCurrentFrame = mAnimationDrawable.getFrame(index);
                     mView.postInvalidate();
                 }
+                index++;
                 try {
                     Thread.sleep(mAnimationDrawable.getDuration(index));
                 } catch (Exception e) {
